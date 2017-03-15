@@ -18,7 +18,7 @@ public class JobData {
 
     private static final String DATA_FILE = "resources/job_data.csv";
     private static Boolean isDataLoaded = false;
-
+    private static Boolean foundOnce = false;
     private static ArrayList<HashMap<String, String>> allJobs;
 
     /**
@@ -69,7 +69,6 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
-
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
@@ -80,10 +79,8 @@ public class JobData {
                 jobs.add(row);
             }
         }
-
         return jobs;
     }
-
     /**
      * Read in data from a CSV file and store it in a list
      */
@@ -93,9 +90,7 @@ public class JobData {
         if (isDataLoaded) {
             return;
         }
-
         try {
-
             // Open the CSV file and set up pull out column header info and records
             Reader in = new FileReader(DATA_FILE);
             CSVParser parser = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
@@ -112,10 +107,8 @@ public class JobData {
                 for (String headerLabel : headers) {
                     newJob.put(headerLabel, record.get(headerLabel));
                 }
-
                 allJobs.add(newJob);
             }
-
             // flag the data as loaded, so we don't do it twice
             isDataLoaded = true;
 
@@ -124,5 +117,25 @@ public class JobData {
             e.printStackTrace();
         }
     }
+    public static void  findByValue(String column, String value) {
+        loadData();
+//        if (foundOnce) {
+//            return;
+            ArrayList<HashMap<String, String>> found = new ArrayList<>();
+            {
+                for (HashMap<String, String> word : allJobs) {
 
-}
+                    String aValue = word.get(column);
+
+                    if (aValue.contains(value)) {
+                        found.add(word);
+                    }
+                }
+                foundOnce = true;
+
+//                return found;
+            }
+        }
+    }
+
+

@@ -63,20 +63,22 @@ public class JobData {
      * with "Enterprise Holdings, Inc".
      *
      * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param value Value of the field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
-
+        String lowercase = value.toLowerCase();
         // load data, if not already loaded
+
         loadData();
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            String  aValue = row.get(column);
+
+            if (aValue.toLowerCase().contains(lowercase) && !jobs.contains(row)) {
                 jobs.add(row);
             }
         }
@@ -85,16 +87,15 @@ public class JobData {
     public static ArrayList<HashMap<String,String>> findByValue( String value) {
         String lowercase = value.toLowerCase();
         loadData();
-//        if (foundOnce) {
-//            return;
         ArrayList<HashMap<String, String>> found = new ArrayList<>();
         {
             for (HashMap<String, String> word : allJobs) {
                 for (Map.Entry<String, String> entry : word.entrySet()) {
                     String aValue = entry.getValue().toLowerCase();
 
-                    if (aValue.contains(lowercase) && !allJobs.contains(word)) {
+                    if (aValue.contains(lowercase) && !found.contains(word)) {
                         found.add(word);
+                        break;
                     }
                 }
             }
@@ -106,7 +107,6 @@ public class JobData {
      * Read in data from a CSV file and store it in a list
      */
     private static void loadData() {
-
         // Only load data once
         if (isDataLoaded) {
             return;

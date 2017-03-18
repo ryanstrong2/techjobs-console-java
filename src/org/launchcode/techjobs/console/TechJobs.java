@@ -2,8 +2,10 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
+import static org.launchcode.techjobs.console.JobData.*;
 /**
  * Created by LaunchCode
  */
@@ -39,9 +41,10 @@ public class TechJobs {
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
-                    printJobs(JobData.findAll());
+                    printJobs(findAll());
+//                    printJobs(JobData.findAll());
                 } else {
-
+//                    ArrayList<String> results = findAll(columnChoice);
                     ArrayList<String> results = JobData.findAll(columnChoice);
 
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
@@ -61,11 +64,21 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 // use for search     (aValue.toLowerCase ().contains (value.toLowerCase ()))
                 if (searchField.equals("all")) {
+                    ArrayList<HashMap<String, String>> results = JobData.findByValue(searchTerm);
+                    if (!results.isEmpty()){
+                        printJobs(results);
+                    }
 
-                    printJobs(JobData.findAll());
+//                    printJobs(JobData.findAll());
 //                    System.out.println(("?"));
+                    else {
+                        System.out.println( searchTerm + " was not found, all jobs listed.");
+                        printJobs(findAll());
+                        System.out.println(searchTerm+ " was not found, all jobs listed.");
+                    }
                 } else {//this is the hash map
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                    System.out.println("\n"+ searchTerm + " not found in " + searchField);
                 }
             }
         }
@@ -76,7 +89,6 @@ public class TechJobs {
         Integer choiceIdx;
         Boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
-
         // Put the choices in an ordered structure so we can
         // associate an integer with each one
         Integer i = 0;
@@ -107,55 +119,18 @@ public class TechJobs {
 //        arrayList is a collection
 //        HashMap<String, String> columnChoices = new HashMap<>();
 //        String columnChoice = findByValue("Wings", columnChoices);
-        for (HashMap<String, String> job : someJobs ) {
 
-            System.out.println("\n*******") ;
-//            System.out.println(columnChoices.get(columnChoice) + job.get("position type"));
-            System.out.println("Name: " + (job.get("name")));
-                System.out.println("Employer: " + job.get("employer"));
-            System.out.println("Location: " + job.get("location"));
-                System.out.println("Core competency: " + job.get("core competency") );
-            System.out.println("*******") ;
+        if (!someJobs.equals("")) {
+            for (HashMap<String, String> map : someJobs) {
+                System.out.println("\n*******");
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    System.out.println(entry.getKey() + " : " + entry.getValue());
 
-
-
-
-//            System.out.println("all");
-                //        String search;
-//                String[] search = new String[someJobs.size()];
-//        do {
-//            System.out.print("Search: ");
-//            search = in.next();
-//            if (!search.equals("")) {
-//                System.out.print("");
-//                String result = in.next();
-//
-//                in.nextLine();
-//            }
-//        }while (!search.equals(""));
-//        System.out.println("\n search Result:");
-//        for (HashMap.Entry<String, String> some : job.entrySet()) {
-//                        System.out.println(some.getKey() + " (" + some.getValue() + ")");
-
-
-//        for (someJobs){
-//            System.out.println(search +  " (" + search + ")");
-
-//        HashMap<String, String> map = new HashMap<String, String>();
-//        String value = map.get("searchField");
-//        for (columnChoice:
-//       String.equals("");
-//        for (String searchTerm : map.keySet()) {
-//            searchKey[i] = searchTerm;
-//            i++;
-////        } key  HashMap (searchTerm); {
-                //  System.out.println(("\n" + "pass" + ":" + searchTerm));
-// each loop
-// use for search
-                //      (searchTerm.toLowerCase ().contains (value.toLowerCase ());
-//find by value
+                }
+                System.out.println("*******");
+//        WORKS
             }
         }
-    }
+    }}
 
 

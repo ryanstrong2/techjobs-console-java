@@ -58,22 +58,23 @@ public class TechJobs {
                 ArrayList<HashMap<String, String>> results = null;
                 if (searchField.equals("all")) {
 //                    printJobs(JobData.findByValue(searchTerm)); //launchCode solution
-                    results = JobData.findByValue(searchTerm);
 //                }else{
 //                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));//lc solution
-                    if (!results.isEmpty()) {
-                        printJobs(results);
-                    }
-//                    printJobs(JobData.findAll());
-//                    System.out.println(("?"));
-                    else {
-                        System.out.println(searchTerm + " was not found, all jobs listed.");
-                        printJobs(findAll());
-//                        System.out.println(searchTerm+ " was not found, all jobs listed.");
-                    }
+//                    if (!results.isEmpty()) {
+//                        printJobs(results);
+//                    }
+////                    printJobs(JobData.findAll());
+////                    System.out.println(("?"));
+//                    else {
+//                        System.out.println(searchTerm + " was not found, all jobs listed.");
+//                        printJobs(findAll());
+////                        System.out.println(searchTerm+ " was not found, all jobs listed.");
+//                    }
                 } else {//this is the hash map
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
-                    if (results.isEmpty()) {
+                    results = JobData.findByColumnAndValue(searchField, searchTerm);
+
+                    printJobs(results);
+                    if (results.size()==0) {
                         System.out.println("\n" + searchTerm + " not found in " + searchField);
                     }
                 }

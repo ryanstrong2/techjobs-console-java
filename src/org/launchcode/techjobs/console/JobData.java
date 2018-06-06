@@ -43,18 +43,13 @@ public class JobData {
                 values.add(aValue);
             }
         }
-
         return values;
     }
-
     public static ArrayList<HashMap<String, String>> findAll() {
-
         // load data, if not already loaded
         loadData();
-
         return allJobs;
     }
-
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
@@ -74,8 +69,6 @@ public class JobData {
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-
-
             String  aValue = row.get(column);
 
             if (aValue.toLowerCase().contains(lowercase) && !jobs.contains(row)) {
@@ -92,7 +85,6 @@ public class JobData {
             for (HashMap<String, String> word : allJobs) {
                 for (Map.Entry<String, String> entry : word.entrySet()) {
                     String aValue = entry.getValue().toLowerCase();
-
                     if (aValue.contains(lowercase) && !found.contains(word)) {
                         found.add(word);
                         break;
@@ -102,7 +94,6 @@ public class JobData {
                 return found;
             }
         }
-
     /**
      * Read in data from a CSV file and store it in a list
      */
@@ -118,9 +109,7 @@ public class JobData {
             List<CSVRecord> records = parser.getRecords();
             Integer numberOfColumns = records.get(0).size();
             String[] headers = parser.getHeaderMap().keySet().toArray(new String[numberOfColumns]);
-
             allJobs = new ArrayList<>();
-
             // Put the records into a more friendly format
             for (CSVRecord record : records) {
                 HashMap<String, String> newJob = new HashMap<>();
@@ -138,7 +127,6 @@ public class JobData {
             e.printStackTrace();
         }
     }
-
     }
 
 

@@ -23,7 +23,6 @@ public class TechJobs {
         columnChoices.put("position type", "Position Type");
         columnChoices.put("name", "Name");
         columnChoices.put("all", "All");
-
         // Top-level menu options
         HashMap<String, String> actionChoices = new HashMap<>();
         actionChoices.put("search", "Search");
@@ -33,52 +32,50 @@ public class TechJobs {
 
         // Allow the user to search until they manually quit
         while (true) {
-
             String actionChoice = getUserSelection("View jobs by:", actionChoices);
 
             if (actionChoice.equals("list")) {
-
                 String columnChoice = getUserSelection("List", columnChoices);
-
                 if (columnChoice.equals("all")) {
                     printJobs(findAll());
 //                    printJobs(JobData.findAll());
                 } else {
 //                    ArrayList<String> results = findAll(columnChoice);
                     ArrayList<String> results = JobData.findAll(columnChoice);
-
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
-
                     // Print list of skills, employers, etc
                     for (String item : results) {
                         System.out.println(item);
                     }
                 }
             } else { // choice is "search"
-
                 // How does the user want to search (e.g. by skill or employer)
                 String searchField = getUserSelection("Search by:", columnChoices);
-
                 // What is their search term?
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
 // use for search     (aValue.toLowerCase ().contains (value.toLowerCase ()))
+                ArrayList<HashMap<String, String>> results = null;
                 if (searchField.equals("all")) {
-                    ArrayList<HashMap<String, String>> results = JobData.findByValue(searchTerm);
-                    if (!results.isEmpty()){
+//                    printJobs(JobData.findByValue(searchTerm)); //launchCode solution
+                    results = JobData.findByValue(searchTerm);
+//                }else{
+//                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));//lc solution
+                    if (!results.isEmpty()) {
                         printJobs(results);
                     }
-
 //                    printJobs(JobData.findAll());
 //                    System.out.println(("?"));
                     else {
-                        System.out.println( searchTerm + " was not found, all jobs listed.");
+                        System.out.println(searchTerm + " was not found, all jobs listed.");
                         printJobs(findAll());
-                        System.out.println(searchTerm+ " was not found, all jobs listed.");
+//                        System.out.println(searchTerm+ " was not found, all jobs listed.");
                     }
                 } else {//this is the hash map
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
-                    System.out.println("\n"+ searchTerm + " not found in " + searchField);
+                    if (results.isEmpty()) {
+                        System.out.println("\n" + searchTerm + " not found in " + searchField);
+                    }
                 }
             }
         }
@@ -91,7 +88,7 @@ public class TechJobs {
         String[] choiceKeys = new String[choices.size()];
         // Put the choices in an ordered structure so we can
         // associate an integer with each one
-        Integer i = 0;
+        Integer i = 0; //int
         for (String choiceKey : choices.keySet()) {
             choiceKeys[i] = choiceKey;
             i++;

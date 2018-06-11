@@ -59,7 +59,7 @@ public class TechJobs {
                 if (searchField.equals("all")) {
 //                    printJobs(JobData.findByValue(searchTerm)); //launchCode solution
 //                }else{
-//                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));//lc solution
+                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));//lc solution
 //                    if (!results.isEmpty()) {
 //                        printJobs(results);
 //                    }
